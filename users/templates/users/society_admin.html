@@ -1,0 +1,33 @@
+{%extends "blog/base_society1.html" %}
+{%block content%}
+
+  <h2>
+    Welcome Admin!
+    Approve The Pending Lists:
+  </h2>
+    {% for user in society.Pending_List.all %}
+    <article class="media content-section">
+    <img class = "rounded-circle article-img"src = "{{ user.profile.image.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        <a class="mr-2" href="{%url 'society_approve' society.id user.id%}">{{ user.username }}</a>
+        <small class="text-muted"><br>{{ user.email }}</br></small>
+        <small class="text-muted"><br>id = {{ user.id }}</br></small>
+      </div>
+    </div>
+    </article>
+    {% endfor %}
+    {%if society.Voting_process_on == False %}
+    <div class="form-group">
+      <button class = "btn btn-outline-info" type = "submit" ><a href = "{%url 'society_conduct_elections' society.id %}">Conduct Elections</a></button>
+    </div>
+    {% elif society.Participation_on == True %}
+    <div class="form-group">
+      <button class = "btn btn-outline-info" type = "submit"><a href = "{%url 'society_conduct_elections' society.id %}">Start Voting Process</a></button>
+    </div>
+    {%else%}
+    <div class="form-group">
+      <button class = "btn btn-outline-info" type = "submit"><a href = "{%url 'society_conduct_elections' society.id %}">End Elections</a></button>
+    </div>
+    {%endif%}
+{%endblock content%}
