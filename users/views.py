@@ -250,7 +250,8 @@ def Vote(request,id):
 def ConfirmVote(request,id1,id2):
     if bool(request.user.member.socities.filter(id = id1)) or bool(request.user.society_set.filter(id = id1)):
         society = Society.objects.filter(id = id1).first()
-        if not bool(society.elections_set.last().whoallvoted.filter(id = id2)):
+        id3=request.user.id
+        if not bool(society.elections_set.last().whoallvoted.filter(id = id3)):
             use = User.objects.filter(id = id2).first()
             participant = society.elections_set.last().participant_set.filter(user_id = id2).first()
             form = VoteCandidate(instance = participant)
